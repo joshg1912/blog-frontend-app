@@ -1,9 +1,9 @@
 <template>
   <div class="post-show">
     <div>
-      <h1>{{ post.title }}</h1>
-      <p>{{ post.body }}</p>
-      <p>{{ post.image }}</p>
+      <h1>Title: {{ post.title }}</h1>
+      <p>Body: {{ post.body }}</p>
+      <router-link v-bind:to="`/posts/${post.id}/edit`"><button>Edit Post</button></router-link>
       <router-link to="/posts">Back to Posts</router-link>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
     };
   },
   created: function () {
-    axios.get("/posts/1").then((response) => {
+    axios.get("/posts/" + this.$route.params.id).then((response) => {
       this.post = response.data;
     });
   },
