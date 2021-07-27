@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Website</a>
+      <a class="navbar-brand" href="/">Website</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -18,13 +18,13 @@
           <li class="nav-item active">
             <a class="nav-link" href="/">Home</a>
           </li>
-          <li class="nav-item">
+          <li v-if="!isLoggedIn()" class="nav-item">
             <a class="nav-link" href="/signup">Signup</a>
           </li>
-          <li class="nav-item">
+          <li v-if="!isLoggedIn()" class="nav-item">
             <a class="nav-link" href="/login">Login</a>
           </li>
-          <li class="nav-item">
+          <li v-if="isLoggedIn()" class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
           </li>
           <li class="nav-item">
@@ -47,3 +47,18 @@ body {
   text-align: center;
 }
 </style>
+<script>
+//import axios from "axios";
+
+export default {
+  methods: {
+    isLoggedIn: function () {
+      if (localStorage.getItem("jwt")) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+};
+</script>

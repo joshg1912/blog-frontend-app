@@ -1,24 +1,30 @@
 <template>
   <div class="posts-index">
-    <div class="card" v-for="post in posts" :key="post.id">
-      <div class="card-body">
-        <h1>Title: {{ post.title }}</h1>
-        <p>Body: {{ post.body }}</p>
-        <img v-bind:src="post.image" alt="post.title" />
+    <div class="card">
+      <div
+        v-for="post in posts"
+        :key="post.id"
+        v-bind:class="{ selected: post === currentPost }"
+        v-on:click="currentPost = post"
+      >
+        <div class="card-body">
+          <router-link v-bind:to="`/posts/${post.id}`">
+            <h1>Title: {{ post.title }}</h1>
+          </router-link>
+          <p>Body: {{ post.body }}</p>
+          <img v-bind:src="post.image" alt="post.title" />
+        </div>
       </div>
-    </div>
-    <h1>{{ message }}</h1>
-    <div v-for="post in posts" :key="post.id">
-      <router-link v-bind:to="`/posts/${post.id}`">
-        <h2>Title: {{ post.title }}</h2>
-      </router-link>
-      <p>Content: {{ post.body }}</p>
-      <img v-bind:src="post.image" alt="post.title" />
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.selected {
+  background-color: rgb(178, 247, 221);
+  transition: 2s ease;
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -28,6 +34,7 @@ export default {
     return {
       message: "Here are posts",
       posts: [],
+      currentPost: {},
     };
   },
   created: function () {
