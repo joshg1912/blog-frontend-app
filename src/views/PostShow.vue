@@ -3,7 +3,9 @@
     <div>
       <h1>Title: {{ post.title }}</h1>
       <p>Body: {{ post.body }}</p>
-      <router-link v-bind:to="`/posts/${post.id}/edit`"><button>Edit Post</button></router-link>
+      <li v-if="$parent.getUserId() == post.user_id">
+        <router-link v-bind:to="`/posts/${post.id}/edit`"><button>Edit Post</button></router-link>
+      </li>
       <router-link to="/posts">Back to Posts</router-link>
     </div>
   </div>
@@ -20,6 +22,7 @@ export default {
   created: function () {
     axios.get("/posts/" + this.$route.params.id).then((response) => {
       this.post = response.data;
+      console.log(response.data);
     });
   },
 };
